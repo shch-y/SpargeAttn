@@ -1,0 +1,16 @@
+[project]
+name = "spas_sage_attn"
+dynamic = ["version", "dependencies", "authors", "license", "readme", "requires-python", "description", "classifiers"]
+
+# version = "0.1.0"
+# requires-python = ">=3.10"
+# dependencies = []
+
+[build-system]
+requires = [
+  "setuptools>=62,<75",
+  "wheel>=0.38,<0.44",
+  "packaging>=21,<24",
+  "ninja"
+]
+build-backend = "setuptools.build_meta"
