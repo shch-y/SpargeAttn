@@ -132,7 +132,7 @@ def spas_sage2_attn_meansim_topk_cuda(q, k, v, attn_mask=None, dropout_p=0.0, is
 
     assert headdim in [64, 128], "headdim should be in [64, 128]. For other headdim, you can use padding and specify the softmax scale."
 
-    pvthreshd = hyperparameter_check(pvthreshd, q.size(-3), q.device)
+    pvthreshd = hyperparameter_check(pvthreshd, q.size(-3), q.device).float()
     o = torch.empty_like(q)
 
     if arch in ("sm80", "sm86", "sm87"):

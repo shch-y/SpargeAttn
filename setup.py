@@ -62,7 +62,6 @@ NVCC_FLAGS = [
     "--threads=8",
     "-Xptxas=-v",
     "-diag-suppress=174", # suppress the specific warning
-    "-Xcompiler", "-include,cassert", # fix error occurs when compiling for SM90+ with newer CUDA toolkits
 ]
 
 ABI = 1 if torch._C._GLIBCXX_USE_CXX11_ABI else 0
@@ -163,6 +162,10 @@ for capability in compute_capabilities:
     NVCC_FLAGS += ["-gencode", f"arch=compute_{num},code=sm_{num}"]
     if capability.endswith("+PTX"):
         NVCC_FLAGS += ["-gencode", f"arch=compute_{num},code=compute_{num}"]
+
+if HAS_SM90:
+    # Only needed for SM90+ builds; cassert has no include guards.
+    NVCC_FLAGS += ["-Xcompiler", "-include,cassert"]
 
 if SAGE2PP_ENABLED:
     CXX_FLAGS += ["-DSAGE2PP_ENABLED"]
